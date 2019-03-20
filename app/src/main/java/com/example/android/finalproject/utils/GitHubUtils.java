@@ -8,8 +8,10 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class GitHubUtils {
-    private final static String API_BASE_URL = "https://cdn.animenewsnetwork.com/encyclopedia/api.xml";
-    private final static String API_TITLE_QUERY_PARAM = "title";
+    private final static String GITHUB_SEARCH_BASE_URL = "https://api.github.com/search/repositories";
+    private final static String GITHUB_SEARCH_QUERY_PARAM = "q";
+    private final static String GITHUB_SEARCH_SORT_PARAM = "sort";
+    private final static String GITHUB_SEARCH_SORT_VALUE = "stars";
 
     public static final String EXTRA_GITHUB_REPO = "GitHubUtils.GitHubRepo";
 
@@ -18,8 +20,9 @@ public class GitHubUtils {
     }
 
     public static String buildGitHubSearchURL(String query) {
-        return Uri.parse(API_BASE_URL).buildUpon()
-                .appendQueryParameter(API_TITLE_QUERY_PARAM, query)
+        return Uri.parse(GITHUB_SEARCH_BASE_URL).buildUpon()
+                .appendQueryParameter(GITHUB_SEARCH_QUERY_PARAM, query)
+                .appendQueryParameter(GITHUB_SEARCH_SORT_PARAM, GITHUB_SEARCH_SORT_VALUE)
                 .build()
                 .toString();
     }

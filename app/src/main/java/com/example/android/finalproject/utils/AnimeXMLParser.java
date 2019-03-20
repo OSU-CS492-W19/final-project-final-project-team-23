@@ -1,4 +1,14 @@
-public class StackOverflowXmlParser {
+import android.util.Xml;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+public class AnimeXMLParser {
     // We don't use namespaces
     private static final String ns = null;
 
@@ -36,7 +46,7 @@ public class StackOverflowXmlParser {
         public final String title;
         public final String photo;
         public final String summary;
-        public final Sting vintage;
+        public final String vintage;
         public final String genre;
         public final String runTime;
 
@@ -47,17 +57,6 @@ public class StackOverflowXmlParser {
             this.vintage = vintage;
             this.genre = genre;
             this.runTime = runTime
-        }
-
-        public void addNumGenre()
-        {
-            this.numGenres++;
-        }
-
-        public void addGenre(String genre)
-        {
-            genres[numGenres] = genre;
-            addNumGenre();
         }
     }
 
@@ -71,7 +70,7 @@ public class StackOverflowXmlParser {
         String vintage = null;
         String genre = null;
         String runTime = null;
-        Int gotGenre = 0;
+        int gotGenre = 0;
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -79,7 +78,7 @@ public class StackOverflowXmlParser {
             String name = parser.getName();
             String type = parser.getAttributeValue(null, "type");
             if (type.equals("Picture")) {
-                picture = readPicture(parser);
+                photo = readPicture(parser);
             } else if (type.equals("Main title")) {
                 title = readBlock(parser);
             } else if (type.equals("Genres")) {
