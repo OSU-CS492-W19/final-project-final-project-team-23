@@ -58,7 +58,7 @@ public class AnimeXMLParser {
             this.photo = photo;
             this.vintage = vintage;
             this.genre = genre;
-            this.runTime = runTime
+            this.runTime = runTime;
         }
     }
 

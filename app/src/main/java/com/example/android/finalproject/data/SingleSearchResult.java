@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 
-@Entity(tableName = "repos")
+@Entity(tableName = "series")
 public class SingleSearchResult implements Serializable {
     @NonNull
     @PrimaryKey
