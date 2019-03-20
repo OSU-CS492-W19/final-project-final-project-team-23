@@ -9,14 +9,14 @@ import com.example.android.finalproject.utils.NetworkUtils;
 
 import java.io.IOException;
 
-public class GitHubSearchLoader extends AsyncTaskLoader<String> {
+public class AnimeSearchLoader extends AsyncTaskLoader<String> {
 
-    private final static String TAG = GitHubSearchLoader.class.getSimpleName();
+    private final static String TAG = AnimeSearchLoader.class.getSimpleName();
 
     private String mSearchResultsJSON;
     private String mURL;
 
-    GitHubSearchLoader(Context context, String url) {
+    AnimeSearchLoader(Context context, String url) {
         super(context);
         mURL = url;
     }

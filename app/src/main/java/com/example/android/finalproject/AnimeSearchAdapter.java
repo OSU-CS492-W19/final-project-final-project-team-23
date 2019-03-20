@@ -7,23 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.android.finalproject.data.GitHubRepo;
+import com.example.android.finalproject.data.SingleSearchResult;
 
 import java.util.List;
 
-public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapter.SearchResultViewHolder> {
-    private List<GitHubRepo> mRepos;
+public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.SearchResultViewHolder> {
+    private List<SingleSearchResult> mRepos;
     OnSearchItemClickListener mSeachItemClickListener;
 
     public interface OnSearchItemClickListener {
-        void onSearchItemClick(GitHubRepo repo);
+        void onSearchItemClick(SingleSearchResult repo);
     }
 
-    GitHubSearchAdapter(OnSearchItemClickListener searchItemClickListener) {
+    AnimeSearchAdapter(OnSearchItemClickListener searchItemClickListener) {
         mSeachItemClickListener = searchItemClickListener;
     }
 
-    public void updateSearchResults(List<GitHubRepo> repos) {
+    public void updateSearchResults(List<SingleSearchResult> repos) {
         mRepos = repos;
         notifyDataSetChanged();
     }
@@ -60,13 +60,13 @@ public class GitHubSearchAdapter extends RecyclerView.Adapter<GitHubSearchAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GitHubRepo searchResult = mRepos.get(getAdapterPosition());
+                    SingleSearchResult searchResult = mRepos.get(getAdapterPosition());
                     mSeachItemClickListener.onSearchItemClick(searchResult);
                 }
             });
         }
 
-        public void bind(GitHubRepo repo) {
+        public void bind(SingleSearchResult repo) {
             mSearchResultTV.setText(repo.full_name);
         }
     }

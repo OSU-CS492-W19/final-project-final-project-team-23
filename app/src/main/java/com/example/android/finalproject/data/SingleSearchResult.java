@@ -8,7 +8,7 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 
 @Entity(tableName = "repos")
-public class GitHubRepo implements Serializable {
+public class SingleSearchResult implements Serializable {
     @NonNull
     @PrimaryKey
     public String full_name;

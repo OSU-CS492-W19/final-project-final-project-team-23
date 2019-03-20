@@ -1,28 +1,36 @@
-package com.example.finalproject;
+package com.example.android.finalproject.utils;
 
 import android.net.Uri;
+
+import com.example.android.finalproject.data.SingleSearchResult;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-
-
 
 public class AnimeUtils {
-
     private final static String API_BASE_URL = "https://cdn.animenewsnetwork.com/encyclopedia/api.xml";
     private final static String API_TITLE_QUERY_PARAM = "title";
-//
-//    private final static String API_TITLE_FORMAT_STR = "title=%s";
 
-    public static String buildForecastURL(String title) {
+    public static final String EXTRA_GITHUB_REPO = "AnimeUtils.SingleSearchResult";
 
+    public static class AnimeSearchResults {
+        public ArrayList<SingleSearchResult> items;
+    }
+
+    public static String buildSearchURL(String query) {
         return Uri.parse(API_BASE_URL).buildUpon()
-                .appendQueryParameter(API_TITLE_QUERY_PARAM, title)
+                .appendQueryParameter(API_TITLE_QUERY_PARAM, query)
                 .build()
                 .toString();
+    }
+
+    public static ArrayList<SingleSearchResult> parseAnimeSearchResults(String json) {
+        Gson gson = new Gson();
+        AnimeSearchResults results = gson.fromJson(json, AnimeSearchResults.class);
+        if (results != null && results.items != null) {
+            return results.items;
+        } else {
+            return null;
+        }
     }
 }

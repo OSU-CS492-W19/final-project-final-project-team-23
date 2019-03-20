@@ -14,17 +14,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.finalproject.data.GitHubRepo;
-import com.example.android.finalproject.utils.GitHubUtils;
+import com.example.android.finalproject.data.SingleSearchResult;
+import com.example.android.finalproject.utils.AnimeUtils;
 
-public class RepoDetailActivity extends AppCompatActivity {
+public class AnimeDetailActivity extends AppCompatActivity {
     private TextView mRepoNameTV;
     private TextView mRepoStarsTV;
     private TextView mRepoDescriptionTV;
     private ImageView mRepoBookmarkIV;
 
-    private GitHubRepoViewModel mGitHubRepoViewModel;
-    private GitHubRepo mRepo;
+    private SingleSearchResultViewModel mGitHubRepoViewModel;
+    private SingleSearchResult mRepo;
     private boolean mIsSaved = false;
 
     @Override
@@ -37,19 +37,19 @@ public class RepoDetailActivity extends AppCompatActivity {
         mRepoDescriptionTV = findViewById(R.id.tv_repo_description);
         mRepoBookmarkIV = findViewById(R.id.iv_repo_bookmark);
 
-        mGitHubRepoViewModel = ViewModelProviders.of(this).get(GitHubRepoViewModel.class);
+        mGitHubRepoViewModel = ViewModelProviders.of(this).get(SingleSearchResultViewModel.class);
 
         mRepo = null;
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(GitHubUtils.EXTRA_GITHUB_REPO)) {
-            mRepo = (GitHubRepo) intent.getSerializableExtra(GitHubUtils.EXTRA_GITHUB_REPO);
+        if (intent != null && intent.hasExtra(AnimeUtils.EXTRA_GITHUB_REPO)) {
+            mRepo = (SingleSearchResult) intent.getSerializableExtra(AnimeUtils.EXTRA_GITHUB_REPO);
             mRepoNameTV.setText(mRepo.full_name);
             mRepoStarsTV.setText("" + mRepo.stargazers_count);
             mRepoDescriptionTV.setText(mRepo.description);
 
-            mGitHubRepoViewModel.getGitHubRepoByName(mRepo.full_name).observe(this, new Observer<GitHubRepo>() {
+            mGitHubRepoViewModel.getGitHubRepoByName(mRepo.full_name).observe(this, new Observer<SingleSearchResult>() {
                 @Override
-                public void onChanged(@Nullable GitHubRepo repo) {
+                public void onChanged(@Nullable SingleSearchResult repo) {
                     if (repo != null) {
                         mIsSaved = true;
                         mRepoBookmarkIV.setImageResource(R.drawable.ic_bookmark_black_24dp);

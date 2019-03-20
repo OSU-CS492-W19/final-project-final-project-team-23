@@ -23,13 +23,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.android.finalproject.data.GitHubRepo;
-import com.example.android.finalproject.utils.GitHubUtils;
+import com.example.android.finalproject.data.SingleSearchResult;
+import com.example.android.finalproject.utils.AnimeUtils;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements GitHubSearchAdapter.OnSearchItemClickListener, LoaderManager.LoaderCallbacks<String>,
+        implements AnimeSearchAdapter.OnSearchItemClickListener, LoaderManager.LoaderCallbacks<String>,
             NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity
     private ProgressBar mLoadingPB;
     private DrawerLayout mDrawerLayout;
 
-    private GitHubSearchAdapter mGitHubSearchAdapter;
-    private ArrayList<GitHubRepo> mRepos;
+    private AnimeSearchAdapter mAnimeSearchAdapter;
+    private ArrayList<SingleSearchResult> mRepos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +71,12 @@ public class MainActivity extends AppCompatActivity
         mSearchResultsRV.setLayoutManager(new LinearLayoutManager(this));
         mSearchResultsRV.setHasFixedSize(true);
 
-        mGitHubSearchAdapter = new GitHubSearchAdapter(this);
-        mSearchResultsRV.setAdapter(mGitHubSearchAdapter);
+        mAnimeSearchAdapter = new AnimeSearchAdapter(this);
+        mSearchResultsRV.setAdapter(mAnimeSearchAdapter);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(REPOS_ARRAY_KEY)) {
-            mRepos = (ArrayList<GitHubRepo>) savedInstanceState.getSerializable(REPOS_ARRAY_KEY);
-            mGitHubSearchAdapter.updateSearchResults(mRepos);
+            mRepos = (ArrayList<SingleSearchResult>) savedInstanceState.getSerializable(REPOS_ARRAY_KEY);
+            mAnimeSearchAdapter.updateSearchResults(mRepos);
         }
 
         getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER_ID, null, this);
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void doGitHubSearch(String query) {
-        String url = GitHubUtils.buildGitHubSearchURL(query);
+        String url = AnimeUtils.buildSearchURL(query);
         Log.d(TAG, "querying search URL: " + url);
 
         Bundle args = new Bundle();
@@ -115,9 +115,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onSearchItemClick(GitHubRepo repo) {
-        Intent intent = new Intent(this, RepoDetailActivity.class);
-        intent.putExtra(GitHubUtils.EXTRA_GITHUB_REPO, repo);
+    public void onSearchItemClick(SingleSearchResult repo) {
+        Intent intent = new Intent(this, AnimeDetailActivity.class);
+        intent.putExtra(AnimeUtils.EXTRA_GITHUB_REPO, repo);
         startActivity(intent);
     }
 
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
         if (bundle != null) {
             url = bundle.getString(SEARCH_URL_KEY);
         }
-        return new GitHubSearchLoader(this, url);
+        return new AnimeSearchLoader(this, url);
     }
 
     @Override
@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity
         if (s != null) {
             mLoadingErrorTV.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);
-            mRepos = GitHubUtils.parseGitHubSearchResults(s);
-            mGitHubSearchAdapter.updateSearchResults(mRepos);
+            mRepos = AnimeUtils.parseAnimeSearchResults(s);
+            mAnimeSearchAdapter.updateSearchResults(mRepos);
         } else {
             mLoadingErrorTV.setVisibility(View.VISIBLE);
             mSearchResultsRV.setVisibility(View.INVISIBLE);
@@ -166,7 +166,7 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_search:
                 return true;
             case R.id.nav_saved_repos:
-                Intent savedReposIntent = new Intent(this, SavedReposActivity.class);
+                Intent savedReposIntent = new Intent(this, SavedResultsActivity.class);
                 startActivity(savedReposIntent);
                 return true;
             default:

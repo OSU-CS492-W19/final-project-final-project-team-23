@@ -9,12 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.android.finalproject.data.GitHubRepo;
-import com.example.android.finalproject.utils.GitHubUtils;
+import com.example.android.finalproject.data.SingleSearchResult;
+import com.example.android.finalproject.utils.AnimeUtils;
 
 import java.util.List;
 
-public class SavedReposActivity extends AppCompatActivity implements GitHubSearchAdapter.OnSearchItemClickListener {
+public class SavedResultsActivity extends AppCompatActivity implements AnimeSearchAdapter.OnSearchItemClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,22 +25,22 @@ public class SavedReposActivity extends AppCompatActivity implements GitHubSearc
         savedReposRV.setLayoutManager(new LinearLayoutManager(this));
         savedReposRV.setHasFixedSize(true);
 
-        final GitHubSearchAdapter adapter = new GitHubSearchAdapter(this);
+        final AnimeSearchAdapter adapter = new AnimeSearchAdapter(this);
         savedReposRV.setAdapter(adapter);
 
-        GitHubRepoViewModel viewModel = ViewModelProviders.of(this).get(GitHubRepoViewModel.class);
-        viewModel.getAllGitHubRepos().observe(this, new Observer<List<GitHubRepo>>() {
+        SingleSearchResultViewModel viewModel = ViewModelProviders.of(this).get(SingleSearchResultViewModel.class);
+        viewModel.getAllGitHubRepos().observe(this, new Observer<List<SingleSearchResult>>() {
             @Override
-            public void onChanged(@Nullable List<GitHubRepo> gitHubRepos) {
-                adapter.updateSearchResults(gitHubRepos);
+            public void onChanged(@Nullable List<SingleSearchResult> singleSearchResults) {
+                adapter.updateSearchResults(singleSearchResults);
             }
         });
     }
 
     @Override
-    public void onSearchItemClick(GitHubRepo repo) {
-        Intent intent = new Intent(this, RepoDetailActivity.class);
-        intent.putExtra(GitHubUtils.EXTRA_GITHUB_REPO, repo);
+    public void onSearchItemClick(SingleSearchResult repo) {
+        Intent intent = new Intent(this, AnimeDetailActivity.class);
+        intent.putExtra(AnimeUtils.EXTRA_GITHUB_REPO, repo);
         startActivity(intent);
     }
 }
