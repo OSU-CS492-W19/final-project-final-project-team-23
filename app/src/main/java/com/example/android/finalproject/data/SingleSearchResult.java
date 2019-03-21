@@ -17,6 +17,7 @@ public class SingleSearchResult implements Serializable {
     public String summary;
     public String airDate;
     public String id;
+    public String studio;
 
     public String html_url;
     public String type;
