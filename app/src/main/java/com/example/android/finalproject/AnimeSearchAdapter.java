@@ -59,6 +59,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         private TextView mSearchResultTV;
         private TextView mSeriesTypeTV;
         private TextView mSeriesAirdateTV;
+        private TextView mSeriesGenreTV;
         private ImageView mSeriesImageIV;
 
         public SearchResultViewHolder(View itemView) {
@@ -67,6 +68,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
             mSeriesTypeTV = itemView.findViewById(R.id.tv_series_type);
             mSeriesImageIV = itemView.findViewById(R.id.iv_series_image);
             mSeriesAirdateTV = itemView.findViewById(R.id.tv_series_airdate);
+            mSeriesGenreTV = itemView.findViewById(R.id.tv_series_genre);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,6 +83,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
             mSearchResultTV.setText(series.name);
             mSeriesTypeTV.setText(series.type);
             mSeriesAirdateTV.setText(series.airDate);
+            mSeriesGenreTV.setText(series.genres);
             Glide.with(mSeriesImageIV.getContext()).load(series.image).into(mSeriesImageIV);
         }
     }
