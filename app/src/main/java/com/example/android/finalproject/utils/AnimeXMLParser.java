@@ -33,6 +33,10 @@ public class AnimeXMLParser {
             String genres = "";
             String summary = "";
             String airDate = "";
+            String type = "";
+            String id = "";
+            String html = "";
+            String htmlBase = "https://www.animenewsnetwork.com/encyclopedia/anime.php?id=";
 
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);              //Single node for single anime tag, a single search result
@@ -42,9 +46,16 @@ public class AnimeXMLParser {
                 genres = "";
                 summary = "";
                 airDate = "";
+                type = "";
+                id = "";
+                html = "";
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;     //Single anime tag, as an Element
                     seriesName = eElement.getAttribute("name");         //Set name
+                    System.out.println("Anime Type : "+ eElement.getAttribute("type"));       //String for name
+                    type = eElement.getAttribute("type");
+                    System.out.println("Anime Id : "+ eElement.getAttribute("id"));       //String for name
+                    id = eElement.getAttribute("id");
 
                     NodeList infos = eElement.getElementsByTagName("info");         //NodeList of the info tags
                     for(int temp2 = 0; temp2 < infos.getLength(); temp2++){
@@ -70,12 +81,17 @@ public class AnimeXMLParser {
                         }
                     }   //Note - end of info for loop
                 }
+                html = htmlBase + id;
+                System.out.println("Anime URL : "+ html);
                 SingleSearchResult searchResult = new SingleSearchResult();
                 searchResult.name = seriesName;
                 searchResult.image = imageURL;
                 searchResult.genres = genres;
                 searchResult.summary = summary;
                 searchResult.airDate = airDate;
+                searchResult.type = type;
+                searchResult.id = id;
+                searchResult.html_url = html;
                 allResults.add(searchResult);
             }   //Note - end of anime for loop
             System.out.println(allResults);
