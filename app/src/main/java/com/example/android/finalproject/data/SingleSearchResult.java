@@ -18,5 +18,4 @@ public class SingleSearchResult implements Serializable {
     public String airDate;
 
     public String html_url;
-    public int stargazers_count;
 }

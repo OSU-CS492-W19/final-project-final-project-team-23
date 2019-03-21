@@ -18,7 +18,6 @@ import com.example.android.finalproject.utils.AnimeUtils;
 
 public class AnimeDetailActivity extends AppCompatActivity {
     private TextView mSeriesNameTV;
-    private TextView mSeriesStarsTV;
     private TextView mSeriesDescriptionTV;
     private ImageView mSeriesBookmarkIV;
 
@@ -32,7 +31,6 @@ public class AnimeDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_series_detail);
 
         mSeriesNameTV = findViewById(R.id.tv_series_name);
-        mSeriesStarsTV = findViewById(R.id.tv_series_stars);
         mSeriesDescriptionTV = findViewById(R.id.tv_series_description);
         mSeriesBookmarkIV = findViewById(R.id.iv_series_bookmark);
 
@@ -43,7 +41,6 @@ public class AnimeDetailActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra(AnimeUtils.EXTRA_SEARCH_RESULT)) {
             mSeries = (SingleSearchResult) intent.getSerializableExtra(AnimeUtils.EXTRA_SEARCH_RESULT);
             mSeriesNameTV.setText(mSeries.name);
-            mSeriesStarsTV.setText("" + mSeries.stargazers_count);
             mSeriesDescriptionTV.setText(mSeries.summary);
 
             mSingleSearchResultViewModel.getSearchResultByName(mSeries.name).observe(this, new Observer<SingleSearchResult>() {

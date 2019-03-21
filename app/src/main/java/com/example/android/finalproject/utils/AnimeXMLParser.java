@@ -38,6 +38,11 @@ public class AnimeXMLParser {
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);              //Single node for single anime tag, a single search result
                 //System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                seriesName = "";
+                imageURL = "";
+                genres = "";
+                summary = "";
+                airDate = "";
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;     //Single anime tag, as an Element
                     //System.out.println("Anime Name : "+ eElement.getAttribute("name"));       //String for name
@@ -68,7 +73,9 @@ public class AnimeXMLParser {
                         }
                         if(infoInstance.getAttribute("type").equals("Vintage")) {
                             //System.out.println(infos.item(temp2).getTextContent());                 //Date aired
-                            airDate = infos.item(temp2).getTextContent();
+                            if(airDate.equals("")) {            //Use first air date
+                                airDate = infos.item(temp2).getTextContent();
+                            }
                         }
                     }   //Note - end of info for loop
                 }
