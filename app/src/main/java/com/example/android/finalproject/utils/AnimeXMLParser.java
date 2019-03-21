@@ -54,22 +54,22 @@ public class AnimeXMLParser {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                     Element eElement = (Element) nNode;     //Single anime tag, as an Element
                     seriesName = eElement.getAttribute("name");         //Set name
-//                    System.out.println("Anime Type : "+ eElement.getAttribute("type"));       //String for name
+                    System.out.println("Anime Type : "+ eElement.getAttribute("type"));       //String for name
                     type = eElement.getAttribute("type");
-//                    System.out.println("Anime Id : "+ eElement.getAttribute("id"));       //String for name
+                    System.out.println("Anime Id : "+ eElement.getAttribute("id"));       //String for name
                     id = eElement.getAttribute("id");
 
                     NodeList infos = eElement.getElementsByTagName("info");         //NodeList of the info tags
                     for(int temp2 = 0; temp2 < infos.getLength(); temp2++){
-                    //System.out.println("In For loop");
+                    System.out.println("In For loop");
                     Element infoInstance = (Element) infos.item(temp2);         //Single "instance" of the info tag
-                    //System.out.println("Attribute" + infoInstance.getAttribute("type"));
+                    System.out.println("Attribute" + infoInstance.getAttribute("type"));
                     if(infoInstance.getAttribute("type").equals("Picture")) {
-                        //System.out.println(infoInstance.getAttribute("src"));      //String for image link
+                        System.out.println(infoInstance.getAttribute("src"));      //String for image link
                         imageURL = infoInstance.getAttribute("src");        //Set image URL
                     }
                     if(infoInstance.getAttribute("type").equals("Genres")) {
-                        //System.out.println(infos.item(temp2).getTextContent());                 //String for genres
+                        System.out.println(infos.item(temp2).getTextContent());                 //String for genres
                         if(genres.equals("")){
                             genres = infos.item(temp2).getTextContent();
                         }
@@ -78,22 +78,25 @@ public class AnimeXMLParser {
                         }
                     }
                     if(infoInstance.getAttribute("type").equals("Plot Summary")) {
-                        //System.out.println(infos.item(temp2).getTextContent());                 //String for plot summary
+                        System.out.println(infos.item(temp2).getTextContent());                 //String for plot summary
                         summary = infos.item(temp2).getTextContent();
                     }
                     if(infoInstance.getAttribute("type").equals("Vintage")) {
-                        //System.out.println(infos.item(temp2).getTextContent());                 //Date aired
+                        System.out.println(infos.item(temp2).getTextContent());                 //Date aired
                         if(airDate.equals("")) {            //Use first air date
                             airDate = infos.item(temp2).getTextContent();
                         }
                     }
                 }   //Note - end of info for loop
                     NodeList credits = eElement.getElementsByTagName("credit");         //NodeList of the info tags
-                    //System.out.println("infos length:" + infos.getLength());
+                    System.out.println("infos length:" + infos.getLength());
 //                    for(int temp3 = 0; temp3 < credits.getLength(); temp3++){
-                        //System.out.println("In For loop");
+                        System.out.println("In For loop");
                         Element creditInstance = (Element) credits.item(0);
-                        Node productionStudio = creditInstance.getFirstChild();//Single "instance" of the info tag
+                        Node productionStudio = null;
+                        if (creditInstance != null){
+                            productionStudio = creditInstance.getFirstChild();//Single "instance" of the info tag
+                        }
                         while (productionStudio != null && productionStudio.getNodeType() != Node.ELEMENT_NODE)
                             productionStudio = productionStudio.getNextSibling();
 
@@ -101,9 +104,9 @@ public class AnimeXMLParser {
                         System.out.println(productionStudio.getFirstChild().getNodeValue());
 
 //                    System.out.println(productionStudio.getNextSibling().getTextContent());
-
-                    studio = productionStudio.getNextSibling().getTextContent();
-
+                    if(productionStudio != null) {
+                        studio = productionStudio.getNextSibling().getTextContent();
+                    }
 //                        System.out.println("Attribute studio: " + productionStudio.getFirstChild().getNextSibling().getTextContent());
 
 //                    }   //Note - end of info for loop
