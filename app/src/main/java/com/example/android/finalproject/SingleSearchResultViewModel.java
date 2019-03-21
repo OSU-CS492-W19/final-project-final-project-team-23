@@ -17,19 +17,19 @@ public class SingleSearchResultViewModel extends AndroidViewModel {
         mSingleSearchResultRepository = new SingleSearchResultRepository(application);
     }
 
-    public void insertGitHubRepo(SingleSearchResult repo) {
-        mSingleSearchResultRepository.insertGitHubRepo(repo);
+    public void insertSingleSearchResult(SingleSearchResult result) {
+        mSingleSearchResultRepository.insertSingleSearchResult(result);
     }
 
-    public void deleteGitHubRepo(SingleSearchResult repo) {
-        mSingleSearchResultRepository.deleteGitHubRepo(repo);
+    public void deleteSingleSearchResult(SingleSearchResult result) {
+        mSingleSearchResultRepository.deleteSingleSearchResult(result);
     }
 
-    public LiveData<List<SingleSearchResult>> getAllGitHubRepos() {
-        return mSingleSearchResultRepository.getAllGitHubRepos();
+    public LiveData<List<SingleSearchResult>> getAllSearchResults() {
+        return mSingleSearchResultRepository.getAllSearchResults();
     }
 
-    public LiveData<SingleSearchResult> getGitHubRepoByName(String fullName) {
-        return mSingleSearchResultRepository.getGitHubRepoByName(fullName);
+    public LiveData<SingleSearchResult> getSearchResultByName(String fullName) {
+        return mSingleSearchResultRepository.getSearchResultByName(fullName);
     }
 }

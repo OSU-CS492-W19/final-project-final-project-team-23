@@ -37,7 +37,7 @@ public class AnimeSearchLoader extends AsyncTaskLoader<String> {
     @Override
     public String loadInBackground() {
         if (mURL != null) {
-            Log.d(TAG, "loading results from GitHub with URL: " + mURL);
+            Log.d(TAG, "loading results from AnimeNewsNetwork with URL: " + mURL);
             String results = null;
             try {
                 results = NetworkUtils.doHTTPGet(mURL);

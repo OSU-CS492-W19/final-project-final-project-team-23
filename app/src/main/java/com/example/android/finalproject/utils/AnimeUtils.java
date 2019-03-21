@@ -11,7 +11,7 @@ public class AnimeUtils {
     private final static String API_BASE_URL = "https://cdn.animenewsnetwork.com/encyclopedia/api.xml";
     private final static String API_TITLE_QUERY_PARAM = "title";
 
-    public static final String EXTRA_GITHUB_REPO = "AnimeUtils.SingleSearchResult";
+    public static final String EXTRA_SEARCH_RESULT = "AnimeUtils.SingleSearchResult";
 
     public static class AnimeSearchResults {
         public ArrayList<SingleSearchResult> items;

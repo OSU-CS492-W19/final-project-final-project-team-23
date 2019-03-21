@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity
             NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    private static final String REPOS_ARRAY_KEY = "githubRepos";
-    private static final String SEARCH_URL_KEY = "githubSearchURL";
+    private static final String RESULTS_ARRAY_KEY = "searchResultsList";
+    private static final String SEARCH_URL_KEY = "SearchURL";
 
-    private static final int GITHUB_SEARCH_LOADER_ID = 0;
+    private static final int SEARCH_LOADER_ID = 0;
 
     private RecyclerView mSearchResultsRV;
     private EditText mSearchBoxET;
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
 
     private AnimeSearchAdapter mAnimeSearchAdapter;
-    private ArrayList<SingleSearchResult> mRepos;
+    private ArrayList<SingleSearchResult> mResults;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +74,12 @@ public class MainActivity extends AppCompatActivity
         mAnimeSearchAdapter = new AnimeSearchAdapter(this);
         mSearchResultsRV.setAdapter(mAnimeSearchAdapter);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(REPOS_ARRAY_KEY)) {
-            mRepos = (ArrayList<SingleSearchResult>) savedInstanceState.getSerializable(REPOS_ARRAY_KEY);
-            mAnimeSearchAdapter.updateSearchResults(mRepos);
+        if (savedInstanceState != null && savedInstanceState.containsKey(RESULTS_ARRAY_KEY)) {
+            mResults = (ArrayList<SingleSearchResult>) savedInstanceState.getSerializable(RESULTS_ARRAY_KEY);
+            mAnimeSearchAdapter.updateSearchResults(mResults);
         }
 
-        getSupportLoaderManager().initLoader(GITHUB_SEARCH_LOADER_ID, null, this);
+        getSupportLoaderManager().initLoader(SEARCH_LOADER_ID, null, this);
 
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -111,21 +111,21 @@ public class MainActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putString(SEARCH_URL_KEY, url);
         mLoadingPB.setVisibility(View.VISIBLE);
-        getSupportLoaderManager().restartLoader(GITHUB_SEARCH_LOADER_ID, args, this);
+        getSupportLoaderManager().restartLoader(SEARCH_LOADER_ID, args, this);
     }
 
     @Override
-    public void onSearchItemClick(SingleSearchResult repo) {
+    public void onSearchItemClick(SingleSearchResult result) {
         Intent intent = new Intent(this, AnimeDetailActivity.class);
-        intent.putExtra(AnimeUtils.EXTRA_GITHUB_REPO, repo);
+        intent.putExtra(AnimeUtils.EXTRA_SEARCH_RESULT, result);
         startActivity(intent);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (mRepos != null) {
-            outState.putSerializable(REPOS_ARRAY_KEY, mRepos);
+        if (mResults != null) {
+            outState.putSerializable(RESULTS_ARRAY_KEY, mResults);
         }
     }
 
@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity
         if (s != null) {
             mLoadingErrorTV.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);
-            mRepos = AnimeUtils.parseAnimeSearchResults(s);
-            mAnimeSearchAdapter.updateSearchResults(mRepos);
+            mResults = AnimeUtils.parseAnimeSearchResults(s);
+            mAnimeSearchAdapter.updateSearchResults(mResults);
         } else {
             mLoadingErrorTV.setVisibility(View.VISIBLE);
             mSearchResultsRV.setVisibility(View.INVISIBLE);
@@ -165,9 +165,9 @@ public class MainActivity extends AppCompatActivity
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
                 return true;
-            case R.id.nav_saved_repos:
-                Intent savedReposIntent = new Intent(this, SavedResultsActivity.class);
-                startActivity(savedReposIntent);
+            case R.id.nav_saved_series:
+                Intent savedResultsIntent = new Intent(this, SavedResultsActivity.class);
+                startActivity(savedResultsIntent);
                 return true;
             default:
                 return false;

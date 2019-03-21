@@ -17,8 +17,8 @@ public interface SingleSearchResultDao {
     void delete(SingleSearchResult repo);
 
     @Query("SELECT * FROM series")
-    LiveData<List<SingleSearchResult>> getAllRepos();
+    LiveData<List<SingleSearchResult>> getAllSearchResults();
 
     @Query("SELECT * FROM series WHERE full_name = :fullName LIMIT 1")
-    LiveData<SingleSearchResult> getRepoByName(String fullName);
+    LiveData<SingleSearchResult> getResultByName(String fullName);
 }

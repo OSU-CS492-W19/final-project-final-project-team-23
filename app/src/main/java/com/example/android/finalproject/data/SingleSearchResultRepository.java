@@ -11,23 +11,23 @@ public class SingleSearchResultRepository {
 
     public SingleSearchResultRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
-        mSingleSearchResultDao = db.gitHubRepoDao();
+        mSingleSearchResultDao = db.singleSearchResultDao();
     }
 
-    public void insertGitHubRepo(SingleSearchResult repo) {
-        new InsertAsyncTask(mSingleSearchResultDao).execute(repo);
+    public void insertSingleSearchResult(SingleSearchResult result) {
+        new InsertAsyncTask(mSingleSearchResultDao).execute(result);
     }
 
-    public void deleteGitHubRepo(SingleSearchResult repo) {
-        new DeleteAsyncTask(mSingleSearchResultDao).execute(repo);
+    public void deleteSingleSearchResult(SingleSearchResult result) {
+        new DeleteAsyncTask(mSingleSearchResultDao).execute(result);
     }
 
-    public LiveData<List<SingleSearchResult>> getAllGitHubRepos() {
-        return mSingleSearchResultDao.getAllRepos();
+    public LiveData<List<SingleSearchResult>> getAllSearchResults() {
+        return mSingleSearchResultDao.getAllSearchResults();
     }
 
-    public LiveData<SingleSearchResult> getGitHubRepoByName(String fullName) {
-        return mSingleSearchResultDao.getRepoByName(fullName);
+    public LiveData<SingleSearchResult> getSearchResultByName(String fullName) {
+        return mSingleSearchResultDao.getResultByName(fullName);
     }
 
     private static class InsertAsyncTask extends AsyncTask<SingleSearchResult, Void, Void> {

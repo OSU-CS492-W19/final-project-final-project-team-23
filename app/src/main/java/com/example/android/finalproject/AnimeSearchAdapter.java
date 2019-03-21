@@ -12,26 +12,26 @@ import com.example.android.finalproject.data.SingleSearchResult;
 import java.util.List;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.SearchResultViewHolder> {
-    private List<SingleSearchResult> mRepos;
+    private List<SingleSearchResult> mSeries;
     OnSearchItemClickListener mSeachItemClickListener;
 
     public interface OnSearchItemClickListener {
-        void onSearchItemClick(SingleSearchResult repo);
+        void onSearchItemClick(SingleSearchResult result);
     }
 
     AnimeSearchAdapter(OnSearchItemClickListener searchItemClickListener) {
         mSeachItemClickListener = searchItemClickListener;
     }
 
-    public void updateSearchResults(List<SingleSearchResult> repos) {
-        mRepos = repos;
+    public void updateSearchResults(List<SingleSearchResult> result) {
+        mSeries = result;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (mRepos != null) {
-            return mRepos.size();
+        if (mSeries != null) {
+            return mSeries.size();
         } else {
             return 0;
         }
@@ -47,7 +47,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull SearchResultViewHolder holder, int position) {
-        holder.bind(mRepos.get(position));
+        holder.bind(mSeries.get(position));
     }
 
     class SearchResultViewHolder extends RecyclerView.ViewHolder {
@@ -60,14 +60,14 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SingleSearchResult searchResult = mRepos.get(getAdapterPosition());
+                    SingleSearchResult searchResult = mSeries.get(getAdapterPosition());
                     mSeachItemClickListener.onSearchItemClick(searchResult);
                 }
             });
         }
 
-        public void bind(SingleSearchResult repo) {
-            mSearchResultTV.setText(repo.full_name);
+        public void bind(SingleSearchResult series) {
+            mSearchResultTV.setText(series.full_name);
         }
     }
 }

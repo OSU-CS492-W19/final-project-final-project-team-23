@@ -21,15 +21,15 @@ public class SavedResultsActivity extends AppCompatActivity implements AnimeSear
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_search_results);
 
-        RecyclerView savedReposRV = findViewById(R.id.rv_saved_repos);
-        savedReposRV.setLayoutManager(new LinearLayoutManager(this));
-        savedReposRV.setHasFixedSize(true);
+        RecyclerView savedSeriesRV = findViewById(R.id.rv_saved_results);
+        savedSeriesRV.setLayoutManager(new LinearLayoutManager(this));
+        savedSeriesRV.setHasFixedSize(true);
 
         final AnimeSearchAdapter adapter = new AnimeSearchAdapter(this);
-        savedReposRV.setAdapter(adapter);
+        savedSeriesRV.setAdapter(adapter);
 
         SingleSearchResultViewModel viewModel = ViewModelProviders.of(this).get(SingleSearchResultViewModel.class);
-        viewModel.getAllGitHubRepos().observe(this, new Observer<List<SingleSearchResult>>() {
+        viewModel.getAllSearchResults().observe(this, new Observer<List<SingleSearchResult>>() {
             @Override
             public void onChanged(@Nullable List<SingleSearchResult> singleSearchResults) {
                 adapter.updateSearchResults(singleSearchResults);
@@ -38,9 +38,9 @@ public class SavedResultsActivity extends AppCompatActivity implements AnimeSear
     }
 
     @Override
-    public void onSearchItemClick(SingleSearchResult repo) {
+    public void onSearchItemClick(SingleSearchResult result) {
         Intent intent = new Intent(this, AnimeDetailActivity.class);
-        intent.putExtra(AnimeUtils.EXTRA_GITHUB_REPO, repo);
+        intent.putExtra(AnimeUtils.EXTRA_SEARCH_RESULT, result);
         startActivity(intent);
     }
 }
