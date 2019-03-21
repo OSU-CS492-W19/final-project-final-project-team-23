@@ -25,6 +25,7 @@ public class AnimeDetailActivity extends AppCompatActivity {
     private TextView mSeriesAirdateTV;
     private TextView mSeriesGenreTV;
     private ImageView mSeriesImageIV;
+    private TextView mSeriesStudioTV;
 
     private SingleSearchResultViewModel mSingleSearchResultViewModel;
     private SingleSearchResult mSeries;
@@ -42,6 +43,7 @@ public class AnimeDetailActivity extends AppCompatActivity {
         mSeriesImageIV = findViewById(R.id.iv_series_image_detail);
         mSeriesAirdateTV = findViewById(R.id.tv__series_airdate_detail);
         mSeriesGenreTV = findViewById(R.id.tv_series_genre_detail);
+        mSeriesStudioTV = findViewById(R.id.tv__series_studio_detail);
 
         mSingleSearchResultViewModel = ViewModelProviders.of(this).get(SingleSearchResultViewModel.class);
 
@@ -54,6 +56,7 @@ public class AnimeDetailActivity extends AppCompatActivity {
             mSeriesTypeTV.setText(mSeries.type);
             mSeriesAirdateTV.setText(mSeries.airDate);
             mSeriesGenreTV.setText(mSeries.genres);
+            mSeriesStudioTV.setText(mSeries.studio);
             Glide.with(mSeriesImageIV.getContext()).load(mSeries.image).into(mSeriesImageIV);
 
             mSingleSearchResultViewModel.getSearchResultByName(mSeries.name).observe(this, new Observer<SingleSearchResult>() {

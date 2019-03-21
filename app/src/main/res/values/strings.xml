@@ -3,7 +3,8 @@
     <string name="search_box_hint">Search Anime...</string>
     <string name="search_button_text">Search</string>
     <string name="loading_error">Unable to run query.  Check internet.</string>
-    <string name="action_view_on_web">View series on Web</string>
+
+    <string name="action_view_on_web">View Anime on AnimeNewsNetwork</string>
     <string name="share_repo_text">%1$s: %2$s</string>
 
     <string name="nav_search">Search</string>
