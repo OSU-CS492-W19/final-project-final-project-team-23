@@ -1,14 +1,19 @@
 package com.example.android.finalproject;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.finalproject.data.SingleSearchResult;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.SearchResultViewHolder> {
@@ -52,10 +57,16 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
     class SearchResultViewHolder extends RecyclerView.ViewHolder {
         private TextView mSearchResultTV;
+        private TextView mSeriesTypeTV;
+        private TextView mSeriesAirdateTV;
+        private ImageView mSeriesImageIV;
 
         public SearchResultViewHolder(View itemView) {
             super(itemView);
             mSearchResultTV = itemView.findViewById(R.id.tv_search_result);
+            mSeriesTypeTV = itemView.findViewById(R.id.tv_series_type);
+            mSeriesImageIV = itemView.findViewById(R.id.iv_series_image);
+            mSeriesAirdateTV = itemView.findViewById(R.id.tv_series_airdate);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -68,6 +79,10 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
 
         public void bind(SingleSearchResult series) {
             mSearchResultTV.setText(series.name);
+            mSeriesTypeTV.setText(series.type);
+            mSeriesAirdateTV.setText(series.airDate);
+            Glide.with(mSeriesImageIV.getContext()).load(series.image).into(mSeriesImageIV);
         }
     }
+
 }
