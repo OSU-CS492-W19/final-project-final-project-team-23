@@ -24,19 +24,75 @@
             android:id="@+id/tv_series_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
+            android:textSize="25sp"
             android:textColor="#000"/>
     </LinearLayout>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/iv_series_image_detail"
+            android:padding="8dp"
+            android:layout_width="150dp"
+            android:layout_height="200dp" />
+        <TextView
+            android:id="@+id/tv_series_type_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="22sp"
+            android:text="Type:"/>
+
+        <TextView
+            android:id="@+id/tv_series_type_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/tv_series_genre_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="22sp"
+            android:text="Genres:"/>
+
+        <TextView
+            android:id="@+id/tv_series_genre_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/tv_series_airdate_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="22sp"
+            android:text="Airdate:"/>
+
+        <TextView
+            android:id="@+id/tv__series_airdate_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textSize="18sp"/>
+        <TextView
+            android:id="@+id/tv_series_description_label"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="22sp"
+            android:text="Description:"/>
+
         <TextView
             android:id="@+id/tv_series_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textSize="22sp"/>
+            android:textSize="18sp"/>
+
+    </LinearLayout>
     </ScrollView>
 
 </LinearLayout>

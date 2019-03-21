@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.android.finalproject.data.SingleSearchResult;
 import com.example.android.finalproject.utils.AnimeUtils;
 
@@ -20,6 +21,10 @@ public class AnimeDetailActivity extends AppCompatActivity {
     private TextView mSeriesNameTV;
     private TextView mSeriesDescriptionTV;
     private ImageView mSeriesBookmarkIV;
+    private TextView mSeriesTypeTV;
+    private TextView mSeriesAirdateTV;
+    private TextView mSeriesGenreTV;
+    private ImageView mSeriesImageIV;
 
     private SingleSearchResultViewModel mSingleSearchResultViewModel;
     private SingleSearchResult mSeries;
@@ -33,6 +38,10 @@ public class AnimeDetailActivity extends AppCompatActivity {
         mSeriesNameTV = findViewById(R.id.tv_series_name);
         mSeriesDescriptionTV = findViewById(R.id.tv_series_description);
         mSeriesBookmarkIV = findViewById(R.id.iv_series_bookmark);
+        mSeriesTypeTV = findViewById(R.id.tv_series_type_detail);
+        mSeriesImageIV = findViewById(R.id.iv_series_image_detail);
+        mSeriesAirdateTV = findViewById(R.id.tv__series_airdate_detail);
+        mSeriesGenreTV = findViewById(R.id.tv_series_genre_detail);
 
         mSingleSearchResultViewModel = ViewModelProviders.of(this).get(SingleSearchResultViewModel.class);
 
@@ -42,6 +51,10 @@ public class AnimeDetailActivity extends AppCompatActivity {
             mSeries = (SingleSearchResult) intent.getSerializableExtra(AnimeUtils.EXTRA_SEARCH_RESULT);
             mSeriesNameTV.setText(mSeries.name);
             mSeriesDescriptionTV.setText(mSeries.summary);
+            mSeriesTypeTV.setText(mSeries.type);
+            mSeriesAirdateTV.setText(mSeries.airDate);
+            mSeriesGenreTV.setText(mSeries.genres);
+            Glide.with(mSeriesImageIV.getContext()).load(mSeries.image).into(mSeriesImageIV);
 
             mSingleSearchResultViewModel.getSearchResultByName(mSeries.name).observe(this, new Observer<SingleSearchResult>() {
                 @Override
