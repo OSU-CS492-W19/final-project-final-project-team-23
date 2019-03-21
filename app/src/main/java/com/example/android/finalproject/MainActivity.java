@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 String searchQuery = mSearchBoxET.getText().toString();
                 if (!TextUtils.isEmpty(searchQuery)) {
-                    doGitHubSearch(searchQuery);
+                    doAnimeSearch(searchQuery);
                 }
             }
         });
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    private void doGitHubSearch(String query) {
+    private void doAnimeSearch(String query) {
         String url = AnimeUtils.buildSearchURL(query);
         Log.d(TAG, "querying search URL: " + url);
 

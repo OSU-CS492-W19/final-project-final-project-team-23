@@ -8,8 +8,8 @@
 
     <item
         android:id="@+id/nav_saved_series"
-        android:title="@string/nav_saved_repos"
-        android:icon="@drawable/ic_nav_saved_repos" />
+        android:title="@string/nav_saved_series"
+        android:icon="@drawable/ic_nav_saved_series" />
 
 
 </menu>

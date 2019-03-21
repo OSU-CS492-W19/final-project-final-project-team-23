@@ -11,10 +11,10 @@ import java.util.List;
 @Dao
 public interface SingleSearchResultDao {
     @Insert
-    void insert(SingleSearchResult repo);
+    void insert(SingleSearchResult result);
 
     @Delete
-    void delete(SingleSearchResult repo);
+    void delete(SingleSearchResult result);
 
     @Query("SELECT * FROM series")
     LiveData<List<SingleSearchResult>> getAllSearchResults();
