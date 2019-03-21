@@ -67,7 +67,7 @@ public class AnimeSearchAdapter extends RecyclerView.Adapter<AnimeSearchAdapter.
         }
 
         public void bind(SingleSearchResult series) {
-            mSearchResultTV.setText(series.full_name);
+            mSearchResultTV.setText(series.name);
         }
     }
 }

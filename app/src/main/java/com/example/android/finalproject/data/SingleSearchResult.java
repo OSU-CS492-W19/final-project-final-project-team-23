@@ -11,9 +11,12 @@ import java.io.Serializable;
 public class SingleSearchResult implements Serializable {
     @NonNull
     @PrimaryKey
-    public String full_name;
+    public String name;
+    public String image;
+    public String genres;
+    public String summary;
+    public String airDate;
 
-    public String description;
     public String html_url;
     public int stargazers_count;
 }

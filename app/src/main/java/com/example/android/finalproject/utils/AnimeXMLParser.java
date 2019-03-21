@@ -1,156 +1,90 @@
 package com.example.android.finalproject.utils;
 
-import android.util.Xml;
+import com.example.android.finalproject.data.SingleSearchResult;
 
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.File;
+import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 public class AnimeXMLParser {
-    // We don't use namespaces
-    private static final String ns = null;
-
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
+    public static ArrayList<SingleSearchResult> parseXML(String xml) {
         try {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            return readFeed(parser);
-        } finally {
-            in.close();
-        }
-    }
-    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List entries = new ArrayList();
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            InputSource is = new InputSource(new StringReader(xml));
 
-        parser.require(XmlPullParser.START_TAG, ns, "ann");
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-            String name = parser.getName();
-            // Starts by looking for the entry tag
-            if (name.equals("anime")) {
-                entries.add(readEntry(parser));
-            } else {
-                skip(parser);
-            }
-        }
-        return entries;
-    }
+            Document doc = dBuilder.parse(is);
 
-        public static class Entry {
-        public final String id;
-        public final String title;
-        public final String photo;
-        public final String summary;
-        public final String vintage;
-        public final String genre;
-        public final String runTime;
+            doc.getDocumentElement().normalize();
+            //System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+            NodeList nList = doc.getElementsByTagName("anime");     //NodeList of anime tags. Different search results
+            //System.out.println("----------------------------");
+            ArrayList<SingleSearchResult> allResults = new ArrayList<>();
+            String seriesName = "";
+            String imageURL = "";
+            String genres = "";
+            String summary = "";
+            String airDate = "";
 
-        private Entry(String id, String title, String summary, String photo, String vintage, String genre, String runTime) {
-            this.id = id;
-            this.title = title;
-            this.summary = summary;
-            this.photo = photo;
-            this.vintage = vintage;
-            this.genre = genre;
-            this.runTime = runTime;
-        }
-    }
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);              //Single node for single anime tag, a single search result
+                //System.out.println("\nCurrent Element :" + nNode.getNodeName());
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element eElement = (Element) nNode;     //Single anime tag, as an Element
+                    //System.out.println("Anime Name : "+ eElement.getAttribute("name"));       //String for name
+                    seriesName = eElement.getAttribute("name");         //Set name
 
-    // Parses the contents of an entry. If it encounters a title, summary, or link tag, hands them off
-    // to their respective "read" methods for processing. Otherwise, skips the tag.
-    private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "anime");
-        String id = null;
-        String title = null;
-        String summary = null;
-        String photo = null;
-        String vintage = null;
-        String genre = null;
-        String runTime = null;
-        int gotGenre = 0;
-        String tag = parser.getName();
-        if (tag.equals("anime")) {
-            id = parser.getAttributeValue(null, "id");
-        }
-        while (parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-            String name = parser.getName();
-            String type = parser.getAttributeValue(null, "type");
-            if (type.equals("Picture")) {
-                photo = readPicture(parser);
-            } else if (type.equals("Main title")) {
-                title = readBlock(parser);
-            } else if (type.equals("Genres")) {
-                if (gotGenre == 0) {
-                    genre = readBlock(parser);
-                    gotGenre = 1;
+                    NodeList infos = eElement.getElementsByTagName("info");         //NodeList of the info tags
+                    //System.out.println("infos length:" + infos.getLength());
+                    for(int temp2 = 0; temp2 < infos.getLength(); temp2++){
+                        //System.out.println("In For loop");
+                        Element infoInstance = (Element) infos.item(temp2);         //Single "instance" of the info tag
+                        //System.out.println("Attribute" + infoInstance.getAttribute("type"));
+                        if(infoInstance.getAttribute("type").equals("Picture")) {
+                            //System.out.println(infoInstance.getAttribute("src"));      //String for image link
+                            imageURL = infoInstance.getAttribute("src");        //Set image URL
+                        }
+                        if(infoInstance.getAttribute("type").equals("Genres")) {
+                            //System.out.println(infos.item(temp2).getTextContent());                 //String for genres
+                            if(genres.equals("")){
+                                genres = infos.item(temp2).getTextContent();
+                            }
+                            else{       //Append to string if it wasn't empty
+                                genres = genres + ", " + infos.item(temp2).getTextContent();
+                            }
+                        }
+                        if(infoInstance.getAttribute("type").equals("Plot Summary")) {
+                            //System.out.println(infos.item(temp2).getTextContent());                 //String for plot summary
+                            summary = infos.item(temp2).getTextContent();
+                        }
+                        if(infoInstance.getAttribute("type").equals("Vintage")) {
+                            //System.out.println(infos.item(temp2).getTextContent());                 //Date aired
+                            airDate = infos.item(temp2).getTextContent();
+                        }
+                    }   //Note - end of info for loop
                 }
-            } else if (type.equals("Plot Summary")) {
-                summary = readBlock(parser);
-            } else if (type.equals("Running time")) {
-                runTime = readBlock(parser);
-            } else if (type.equals("Vintage")) {
-                vintage = readBlock(parser);
-            } else {
-                skip(parser);
-            }
+                SingleSearchResult searchResult = new SingleSearchResult();
+                searchResult.name = seriesName;
+                searchResult.image = imageURL;
+                searchResult.genres = genres;
+                searchResult.summary = summary;
+                searchResult.airDate = airDate;
+                allResults.add(searchResult);
+            }   //Note - end of anime for loop
+            System.out.println(allResults);
+            return allResults;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return new Entry(id, title, summary, photo, vintage, genre, runTime);
+        return null;
     }
-
-    // Processes title tags in the feed.
-    private String readBlock(XmlPullParser parser) throws IOException, XmlPullParserException {
-        parser.require(XmlPullParser.START_TAG, ns, "info");
-        String title = readText(parser);
-        parser.require(XmlPullParser.END_TAG, ns, "info");
-        return title;
-    }
-
-    // Processes link tags in the feed.
-    private String readPicture(XmlPullParser parser) throws IOException, XmlPullParserException {
-        String link = "";
-        parser.require(XmlPullParser.START_TAG, ns, "link");
-        String tag = parser.getName();
-        if (tag.equals("info")) {
-                link = parser.getAttributeValue(null, "src");
-        }
-        parser.require(XmlPullParser.END_TAG, ns, "link");
-        return link;
-    }
-    // For the tags title and summary, extracts their text values.
-    private String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
-        String result = "";
-        if (parser.next() == XmlPullParser.TEXT) {
-            result = parser.getText();
-            parser.nextTag();
-        }
-        return result;
-    }
-    
-    private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
-        if (parser.getEventType() != XmlPullParser.START_TAG) {
-            throw new IllegalStateException();
-        }
-        int depth = 1;
-        while (depth != 0) {
-            switch (parser.next()) {
-            case XmlPullParser.END_TAG:
-                depth--;
-                break;
-            case XmlPullParser.START_TAG:
-                depth++;
-                break;
-            }
-        }
-     }
 }

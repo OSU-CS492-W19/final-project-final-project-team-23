@@ -19,6 +19,6 @@ public interface SingleSearchResultDao {
     @Query("SELECT * FROM series")
     LiveData<List<SingleSearchResult>> getAllSearchResults();
 
-    @Query("SELECT * FROM series WHERE full_name = :fullName LIMIT 1")
+    @Query("SELECT * FROM series WHERE name = :fullName LIMIT 1")
     LiveData<SingleSearchResult> getResultByName(String fullName);
 }

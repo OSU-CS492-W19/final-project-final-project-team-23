@@ -3,7 +3,6 @@ package com.example.android.finalproject.utils;
 import android.net.Uri;
 
 import com.example.android.finalproject.data.SingleSearchResult;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -27,12 +26,11 @@ public class AnimeUtils {
     public static ArrayList<SingleSearchResult> parseAnimeSearchResults(String xml) {
         //Gson gson = new Gson();
         //AnimeSearchResults results = gson.fromJson(json, AnimeSearchResults.class);
-        TestParser.parseXML(xml);/*
-        if (results != null && results.items != null) {
-            return results.items;
+        ArrayList<SingleSearchResult> results = AnimeXMLParser.parseXML(xml);
+        if (results != null) {
+            return results;
         } else {
             return null;
-        }*/
-        return null;
+        }
     }
 }

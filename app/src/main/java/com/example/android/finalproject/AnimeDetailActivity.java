@@ -42,11 +42,11 @@ public class AnimeDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(AnimeUtils.EXTRA_SEARCH_RESULT)) {
             mSeries = (SingleSearchResult) intent.getSerializableExtra(AnimeUtils.EXTRA_SEARCH_RESULT);
-            mSeriesNameTV.setText(mSeries.full_name);
+            mSeriesNameTV.setText(mSeries.name);
             mSeriesStarsTV.setText("" + mSeries.stargazers_count);
-            mSeriesDescriptionTV.setText(mSeries.description);
+            mSeriesDescriptionTV.setText(mSeries.summary);
 
-            mSingleSearchResultViewModel.getSearchResultByName(mSeries.full_name).observe(this, new Observer<SingleSearchResult>() {
+            mSingleSearchResultViewModel.getSearchResultByName(mSeries.name).observe(this, new Observer<SingleSearchResult>() {
                 @Override
                 public void onChanged(@Nullable SingleSearchResult result) {
                     if (result != null) {
