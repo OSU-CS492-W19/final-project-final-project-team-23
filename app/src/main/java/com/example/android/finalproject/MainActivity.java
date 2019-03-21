@@ -85,9 +85,11 @@ public class MainActivity extends AppCompatActivity
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String searchQuery = mSearchBoxET.getText().toString();
-                searchQuery.replaceAll("","_");
+                String searchText = mSearchBoxET.getText().toString();
+                String searchQuery = searchText.replaceAll("","_");
                 searchQuery = "~" + searchQuery;
+
+
                 if (!TextUtils.isEmpty(searchQuery)) {
                     doAnimeSearch(searchQuery);
                 }

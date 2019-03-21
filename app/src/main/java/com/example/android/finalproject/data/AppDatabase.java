@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {SingleSearchResult.class}, version = 1)
+@Database(entities = {SingleSearchResult.class, ASearchQuery.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static volatile AppDatabase INSTANCE;
 
@@ -14,7 +14,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "github_repos_db").build();
+                            AppDatabase.class, "anime_bookmarks_db").build();
                 }
             }
         }
@@ -22,4 +22,5 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract SingleSearchResultDao singleSearchResultDao();
+    public abstract ASearchQueryDao aSearchQueryDao();
 }
