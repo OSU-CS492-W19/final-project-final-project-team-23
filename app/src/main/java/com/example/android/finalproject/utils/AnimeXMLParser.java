@@ -27,7 +27,6 @@ public class AnimeXMLParser {
             doc.getDocumentElement().normalize();
             //System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
             NodeList nList = doc.getElementsByTagName("anime");     //NodeList of anime tags. Different search results
-            //System.out.println("----------------------------");
             ArrayList<SingleSearchResult> allResults = new ArrayList<>();
             String seriesName = "";
             String imageURL = "";
