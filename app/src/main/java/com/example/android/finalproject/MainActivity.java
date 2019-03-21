@@ -86,6 +86,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String searchQuery = mSearchBoxET.getText().toString();
+                searchQuery.replaceAll("","_");
+                searchQuery = "~" + searchQuery;
                 if (!TextUtils.isEmpty(searchQuery)) {
                     doAnimeSearch(searchQuery);
                 }
