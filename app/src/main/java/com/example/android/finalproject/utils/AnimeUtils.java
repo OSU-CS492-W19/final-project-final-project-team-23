@@ -24,8 +24,6 @@ public class AnimeUtils {
     }
 
     public static ArrayList<SingleSearchResult> parseAnimeSearchResults(String xml) {
-        //Gson gson = new Gson();
-        //AnimeSearchResults results = gson.fromJson(json, AnimeSearchResults.class);
         ArrayList<SingleSearchResult> results = AnimeXMLParser.parseXML(xml);
         if (results != null) {
             return results;
