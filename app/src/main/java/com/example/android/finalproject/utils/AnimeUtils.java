@@ -24,13 +24,15 @@ public class AnimeUtils {
                 .toString();
     }
 
-    public static ArrayList<SingleSearchResult> parseAnimeSearchResults(String json) {
-        Gson gson = new Gson();
-        AnimeSearchResults results = gson.fromJson(json, AnimeSearchResults.class);
+    public static ArrayList<SingleSearchResult> parseAnimeSearchResults(String xml) {
+        //Gson gson = new Gson();
+        //AnimeSearchResults results = gson.fromJson(json, AnimeSearchResults.class);
+        TestParser.parseXML(xml);/*
         if (results != null && results.items != null) {
             return results.items;
         } else {
             return null;
-        }
+        }*/
+        return null;
     }
 }

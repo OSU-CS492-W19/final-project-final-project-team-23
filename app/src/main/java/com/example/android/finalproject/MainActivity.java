@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity
         if (s != null) {
             mLoadingErrorTV.setVisibility(View.INVISIBLE);
             mSearchResultsRV.setVisibility(View.VISIBLE);
+            Log.d(TAG, "xml results:" + s);
             mResults = AnimeUtils.parseAnimeSearchResults(s);
             mAnimeSearchAdapter.updateSearchResults(mResults);
         } else {

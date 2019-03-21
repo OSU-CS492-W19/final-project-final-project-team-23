@@ -7,7 +7,7 @@
     <string name="share_repo_text">%1$s: %2$s</string>
 
     <string name="nav_search">Search</string>
-    <string name="nav_saved_series">Saved Series</string>
+    <string name="nav_saved_series">Bookmarks</string>
 
 
 </resources>
