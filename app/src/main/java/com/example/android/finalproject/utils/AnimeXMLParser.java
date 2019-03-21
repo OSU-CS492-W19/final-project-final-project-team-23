@@ -45,6 +45,7 @@ public class AnimeXMLParser {
     }
 
         public static class Entry {
+        public final String id;
         public final String title;
         public final String photo;
         public final String summary;
@@ -52,7 +53,8 @@ public class AnimeXMLParser {
         public final String genre;
         public final String runTime;
 
-        private Entry(String title, String summary, String photo, String vintage, String genre, String runTime) {
+        private Entry(String id, String title, String summary, String photo, String vintage, String genre, String runTime) {
+            this.id = id;
             this.title = title;
             this.summary = summary;
             this.photo = photo;
@@ -66,6 +68,7 @@ public class AnimeXMLParser {
     // to their respective "read" methods for processing. Otherwise, skips the tag.
     private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "anime");
+        String id = null;
         String title = null;
         String summary = null;
         String photo = null;
@@ -73,6 +76,10 @@ public class AnimeXMLParser {
         String genre = null;
         String runTime = null;
         int gotGenre = 0;
+        String tag = parser.getName();
+        if (tag.equals("anime")) {
+            id = parser.getAttributeValue(null, "id");
+        }
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
                 continue;
@@ -98,7 +105,7 @@ public class AnimeXMLParser {
                 skip(parser);
             }
         }
-        return new Entry (title, summary, photo, vintage, genre, runTime);
+        return new Entry(id, title, summary, photo, vintage, genre, runTime);
     }
 
     // Processes title tags in the feed.
