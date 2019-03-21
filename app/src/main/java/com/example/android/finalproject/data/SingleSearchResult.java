@@ -16,6 +16,8 @@ public class SingleSearchResult implements Serializable {
     public String genres;
     public String summary;
     public String airDate;
+    public String id;
 
     public String html_url;
+    public String type;
 }
