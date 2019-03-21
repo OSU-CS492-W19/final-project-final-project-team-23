@@ -11,6 +11,8 @@ public class AnimeUtils {
     private final static String API_TITLE_QUERY_PARAM = "title";
 
     public static final String EXTRA_SEARCH_RESULT = "AnimeUtils.SingleSearchResult";
+    public static final String EXTRA_SEARCH_QUERY = "AnimeUtils.ASearchQuery";
+
 
     public static class AnimeSearchResults {
         public ArrayList<SingleSearchResult> items;

@@ -31,8 +31,9 @@ import com.example.android.finalproject.utils.AnimeUtils;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements AnimeSearchAdapter.OnSearchItemClickListener, LoaderManager.LoaderCallbacks<String>,
-            NavigationView.OnNavigationItemSelectedListener {
+        implements AnimeSearchAdapter.OnSearchItemClickListener,
+        LoaderManager.LoaderCallbacks<String>,
+        NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String RESULTS_ARRAY_KEY = "searchResultsList";
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     private AnimeSearchAdapter mAnimeSearchAdapter;
     private ArrayList<SingleSearchResult> mResults;
     private ASearchQueryViewModel mASearchQueryViewModel;
+    private ASearchQuery mQuery;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +88,19 @@ public class MainActivity extends AppCompatActivity
         }
 
         getSupportLoaderManager().initLoader(SEARCH_LOADER_ID, null, this);
+
+        Intent intent = getIntent();
+        if(intent != null && intent.hasExtra(AnimeUtils.EXTRA_SEARCH_QUERY)){
+            mQuery = (ASearchQuery) intent.getSerializableExtra(
+                    AnimeUtils.EXTRA_SEARCH_QUERY
+            );
+            String searchQuery = mQuery.query.replaceAll(" ","_");
+            searchQuery = "~" + searchQuery;
+            if(!TextUtils.isEmpty(searchQuery)){
+                mSearchBoxET.setText(mQuery.query);
+                doAnimeSearch(searchQuery);
+            }
+        }
 
         Button searchButton = findViewById(R.id.btn_search);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +191,10 @@ public class MainActivity extends AppCompatActivity
         mDrawerLayout.closeDrawers();
         switch (menuItem.getItemId()) {
             case R.id.nav_search:
+                return true;
+            case R.id.nav_search_history:
+                Intent searchHistoryIntent = new Intent(this, SavedQueriesActivity.class);
+                startActivity(searchHistoryIntent);
                 return true;
             case R.id.nav_saved_series:
                 Intent savedResultsIntent = new Intent(this, SavedResultsActivity.class);

@@ -21,6 +21,13 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".SavedQueriesActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity
             android:name=".AnimeDetailActivity"
             android:parentActivityName=".MainActivity">
             <meta-data
