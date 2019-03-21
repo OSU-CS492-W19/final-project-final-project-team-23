@@ -1,5 +1,6 @@
 package com.example.android.finalproject;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.finalproject.data.ASearchQuery;
 import com.example.android.finalproject.data.SingleSearchResult;
 import com.example.android.finalproject.utils.AnimeUtils;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity
 
     private AnimeSearchAdapter mAnimeSearchAdapter;
     private ArrayList<SingleSearchResult> mResults;
+    private ASearchQueryViewModel mASearchQueryViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity
         mAnimeSearchAdapter = new AnimeSearchAdapter(this);
         mSearchResultsRV.setAdapter(mAnimeSearchAdapter);
 
+        mASearchQueryViewModel = ViewModelProviders.of(this).get(ASearchQueryViewModel.class);
+
         if (savedInstanceState != null && savedInstanceState.containsKey(RESULTS_ARRAY_KEY)) {
             mResults = (ArrayList<SingleSearchResult>) savedInstanceState.getSerializable(RESULTS_ARRAY_KEY);
             mAnimeSearchAdapter.updateSearchResults(mResults);
@@ -86,10 +91,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 String searchText = mSearchBoxET.getText().toString();
-                String searchQuery = searchText.replaceAll("","_");
+                String searchQuery = searchText.replaceAll(" ","_");
                 searchQuery = "~" + searchQuery;
-
-
+                ASearchQuery searchContents = new ASearchQuery();
+                searchContents.query = searchText;
+                mASearchQueryViewModel.insertASearchQuery(searchContents);
                 if (!TextUtils.isEmpty(searchQuery)) {
                     doAnimeSearch(searchQuery);
                 }
